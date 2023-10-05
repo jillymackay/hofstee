@@ -26,20 +26,25 @@ shinyUI(
                                                max = 100,
                                                value = 10),
                                    sliderInput(inputId = "ex_lowmark",
-                                               label = "What is the lowest % correct score that you would be happy to consider a pass?",
+                                               label = "What is the lowest % correct score that you would be happy to consider a borderline pass?",
                                                min = 0,
                                                max = 100,
                                                value = 48),
                                    sliderInput(inputId = "ex_highmark",
-                                               label = "What is the highest % correct score that you would be happy to consider a pass?",
+                                               label = "What is the highest % correct score that you would be happy to consider a borderline pass?",
                                                min = 0,
                                                max = 100,
                                                value = 52)
                                    ),
                       mainPanel(tags$h2("Decide how you would apply Hofstee Standard Setting to this data"),
-                                plotOutput(outputId = "p_exdat"),
-                                tableOutput(outputId = "t_exhofstable"),
-                                plotOutput(outputId = "p_exhofplot"))
+                                fluidPage(column(width = 6,
+                                                 plotOutput(outputId = "p_exdat"),
+                                                 tableOutput(outputId = "t_exhofstable")),
+                                          column(width = 6,
+                                                 plotOutput(outputId = "p_exhofplot"),
+                                                 tags$p("Adjust the criteria on the left until the red square intersects the grade distribution.
+                                                         If you see a 'NA' pass, it means that your criteria are incompatible with applying the Hofstee
+                                                        method to these grades."))))
                       ),
              tabPanel(title = "Standard set your own marks",
                       sidebarPanel(tags$p("Upload your marks file here. The only data required is the final course mark – this should be in a column headed ‘marks’ and saved as a", tags$em(".xlsx"), "file. There is no need to have a specific name for the file."),

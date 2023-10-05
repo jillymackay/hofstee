@@ -31,7 +31,7 @@ shinyServer(function(input, output, session){
   })
 
 
-  exdat <- tibble(grades = round(rnorm(100, 55, 15),0)) |>
+  exdat <- tibble(grades = round(rnorm(100, 65, 5),0)) |>
     mutate(grades = case_when(grades > 99 ~ 99,
                               grades < 8 ~ 8,
                               TRUE ~ as.numeric(grades)))
@@ -69,19 +69,22 @@ shinyServer(function(input, output, session){
   output$p_exdat <- renderPlot({
 
     exdat |>
+      mutate(class = case_when(grades > as.numeric(exhofs()$pass_mark) ~ "Pass",
+                               TRUE ~ "Fail")) |>
       ggplot(aes(x = row_number(grades))) +
-      geom_boxplot(aes(y = grades, alpha = 0.3, x= 100), position = position_nudge(x = -.01), width = 20, outlier.shape = NA) +
-      geom_violinhalf(aes(y = grades, alpha= 0.3, x = 125), linetype = "dashed", position = position_nudge(x = .2), width = 30) +
-      geom_point(aes(y = grades), position = position_jitter(width = .13), size = 0.5, alpha = 0.6) +
+      geom_boxplot(aes(y = grades, alpha = 0.3, x= 100), position = position_nudge(x = -.01), width = 20, outlier.shape = NA, colour = "#004f71", fill = "#487a7b") +
+      geom_violinhalf(aes(y = grades, alpha= 0.3, x = 125), linetype = "dashed", position = position_nudge(x = .2), width = 30, fill= "#004f71") +
+      geom_point(aes(y = grades, colour = class, shape = class), position = position_jitter(width = .13), size = 1, alpha = 0.6) +
       theme_classic() +
       labs(caption = "Raincloud plot (see Allen et al 2020) of 100 randomly generated grades
        between 0 and 100.",
-       x = "Student Number", y = "Grade achieved on exam") +
+       y = "Grade achieved on exam",
+       x = NULL) +
       theme(legend.position = "none") +
       scale_y_continuous(limits = c(0,100)) +
-      scale_x_continuous(limits = c(0,150)) +
+      scale_x_continuous(breaks = NULL) +
+      scale_colour_manual(values =c("#a50034", "#487a7b"))+
       coord_flip()
-
   })
 
 
