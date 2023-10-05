@@ -17,8 +17,8 @@ hofstee(mydata$marks, 2, 10, 45, 55)\n\n")
   # check some things
   if(!is.numeric(marks)) stop("marks need to be numbers")
   if(length(marks)<2) stop("need to have more than one mark")
-  if(low.fail.pc >= high.fail.pc) stop("high.fail.pc must be > low.fail.pc")
-  if(low.mark >= high.mark) stop("high.mark must be > low.mark")
+  if(low.fail.pc >= high.fail.pc) stop("The highest fail % must be greater than the lowest fail %")
+  if(low.mark >= high.mark) stop("The highest mark must be greater than the lowest mark")
 
   # linear interpolation of marks
   marks <- marks[!is.na(marks)]

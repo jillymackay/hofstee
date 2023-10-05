@@ -3,6 +3,7 @@
 
 library(shiny)
 library(tidyverse)
+library(see)
 
 
 
@@ -30,7 +31,10 @@ shinyServer(function(input, output, session){
   })
 
 
-  exdat <- tibble(grades = round(rnorm(100, 55, 20),0))
+  exdat <- tibble(grades = round(rnorm(100, 55, 15),0)) |>
+    mutate(grades = case_when(grades > 99 ~ 99,
+                              grades < 8 ~ 8,
+                              TRUE ~ as.numeric(grades)))
 
 
   hofs <- reactive({
@@ -66,13 +70,18 @@ shinyServer(function(input, output, session){
 
     exdat |>
       ggplot(aes(x = row_number(grades))) +
+      geom_boxplot(aes(y = grades, alpha = 0.3, x= 100), position = position_nudge(x = -.01), width = 20, outlier.shape = NA) +
+      geom_violinhalf(aes(y = grades, alpha= 0.3, x = 125), linetype = "dashed", position = position_nudge(x = .2), width = 30) +
       geom_point(aes(y = grades), position = position_jitter(width = .13), size = 0.5, alpha = 0.6) +
-      see::geom_violinhalf(aes(y = grades, alpha= 0.3), linetype = "dashed", position = position_nudge(x = .2)) +
-      geom_boxplot(aes(y = grades, alpha = 0.3), position = position_nudge(x = -.1), width = 0.1, outlier.shape = NA) +
       theme_classic() +
-      labs(x = "Feed Type", y = "Grades") +
+      labs(caption = "Raincloud plot (see Allen et al 2020) of 100 randomly generated grades
+       between 0 and 100.",
+       x = "Student Number", y = "Grade achieved on exam") +
       theme(legend.position = "none") +
+      scale_y_continuous(limits = c(0,100)) +
+      scale_x_continuous(limits = c(0,150)) +
       coord_flip()
+
   })
 
 
@@ -87,6 +96,8 @@ shinyServer(function(input, output, session){
   output$t_hofstable <- renderTable({
     hof_table(dat()$marks,  input$i_low.fail.pc, input$i_high.fail.pc, input$i_low.mark, input$i_high.mark)
   })
+
+
 
 
   output$t_exhofstable <- renderTable({
