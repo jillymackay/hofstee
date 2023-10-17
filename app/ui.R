@@ -15,6 +15,8 @@ shinyUI(
                                    tags$p("These are the main criteria used in Hofstee standard setting.
                                           Try changing some of the criteria and look what happens to the
                                           corresponding pass rate of the exam to the right."),
+                                   # actionButton(inputId = "go",
+                                   #              label = "(re) generate example data"),
                                    sliderInput(inputId = "ex_lowfails",
                                                label = "What is the minimum % of students that will fail the exam? (In practice we would advise this should be 0%!)",
                                                min = 0,
@@ -38,7 +40,7 @@ shinyUI(
                                    ),
                       mainPanel(tags$h2("Decide how you would apply Hofstee Standard Setting to this data"),
                                 fluidPage(column(width = 6,
-                                                 plotOutput(outputId = "p_exdat"),
+                                                 #plotOutput(outputId = "p_exdat"),
                                                  tableOutput(outputId = "t_exhofstable")),
                                           column(width = 6,
                                                  plotOutput(outputId = "p_exhofplot"),
@@ -82,9 +84,10 @@ tags$p("That said, there is still variation year on year in exam difficulty.
                                        performance level of borderline students on each item or component of the test
                                        as part of", tags$em("Criterion Referenced Standard Setting."),
        "For Multiple Choice Question exams, the Hofstee method is well-established as
-                                       appropriate (Noricini, 2003). This app describes how the Hofstee method
+                                       appropriate", tags$a(href = "https://asmepublications.onlinelibrary.wiley.com/doi/full/10.1046/j.1365-2923.2003.01495.x", "(Noricini, 2003)."), "This app describes how the Hofstee method
                                        works and applies criterion to an example dataset. It will also allow
                                        you to standard set your own range of marks."),
+tags$p("The code for this app is freely available", tags$a(href="https://github.com/jillymackay/hofstee", "on github here"))
                      )
              )
 )

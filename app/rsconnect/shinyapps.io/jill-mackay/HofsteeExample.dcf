@@ -1,0 +1,12 @@
+name: HofsteeExample
+title: HofsteeExample
+username: jill-mackay
+account: jill-mackay
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10218804
+bundleId: 7814582
+url: https://jill-mackay.shinyapps.io/HofsteeExample/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

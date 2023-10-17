@@ -31,10 +31,7 @@ shinyServer(function(input, output, session){
   })
 
 
-  exdat <- tibble(grades = round(rnorm(100, 65, 5),0)) |>
-    mutate(grades = case_when(grades > 99 ~ 99,
-                              grades < 8 ~ 8,
-                              TRUE ~ as.numeric(grades)))
+  exdat <- make_ex()
 
 
   hofs <- reactive({
@@ -68,6 +65,7 @@ shinyServer(function(input, output, session){
 
   output$p_exdat <- renderPlot({
 
+
     exdat |>
       mutate(class = case_when(grades > as.numeric(exhofs()$pass_mark) ~ "Pass",
                                TRUE ~ "Fail")) |>
@@ -85,6 +83,7 @@ shinyServer(function(input, output, session){
       scale_x_continuous(breaks = NULL) +
       scale_colour_manual(values =c("#a50034", "#487a7b"))+
       coord_flip()
+
   })
 
 

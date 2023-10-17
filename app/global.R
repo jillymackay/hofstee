@@ -139,3 +139,12 @@ hofstee(mydata$marks, 2, 10, 45, 55)\n\n")
 }
 
 
+
+
+make_ex <- function(){
+  d <- tibble(grades = round(rnorm(100, 65, 5),0)) |>
+    mutate(grades = case_when(grades > 99 ~ 99,
+                              grades < 8 ~ 8,
+                              TRUE ~ as.numeric(grades)))
+  return(d)
+}
