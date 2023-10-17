@@ -44,10 +44,13 @@ shinyUI(
                                                  plotOutput(outputId = "p_exhofplot"),
                                                  tags$p("Adjust the criteria on the left until the red square intersects the grade distribution.
                                                          If you see a 'NA' pass, it means that your criteria are incompatible with applying the Hofstee
-                                                        method to these grades."))))
+                                                        method to these grades.")))),
+                      imageOutput("logo", inline = TRUE),
                       ),
              tabPanel(title = "Standard set your own marks",
-                      sidebarPanel(tags$p("Upload your marks file here. The only data required is the final course mark – this should be in a column headed ‘marks’ and saved as a", tags$em(".xlsx"), "file. There is no need to have a specific name for the file."),
+                      sidebarPanel(tags$p("Upload your marks file here. The only data required is the final course mark – this should be in a column headed ‘marks’ and saved as a", tags$em(".xlsx"), "file. There is no need to have a specific name for the file.",
+                                          tags$p(tags$em("Please note: "),"this server is currently hosted by shinyapps.io, i.e. does not fall under GDPR processing. ", tags$em("Do not upload any identifiable data e.g. exam numbers to this version of the app."))
+                                        ),
                                    fileInput(inputId = "grade_file",
                                              label = "Upload your xlsx file here"),
                                    textInput(inputId = "course_name",

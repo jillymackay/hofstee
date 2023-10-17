@@ -108,6 +108,19 @@ shinyServer(function(input, output, session){
   })
 
 
+  # ---------------------- Flat Images -------------------
+
+
+  output$logo <- renderImage({
+    # Return a list containing the filename
+    list(src = file.path("assets/logo.png"),
+         contentType = 'image/png',
+         width = 221,
+         height = 52,
+         alt = "R(D)SVS Logo")
+  }, deleteFile = FALSE)
+
+
 
  #------------ Close server bracket
 
